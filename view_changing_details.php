@@ -13,15 +13,15 @@
 		$db = new db_connection();
 		$db->connect();
 		
-		$result = mysqli_query($db->myconn, "SELECT * FROM feeding WHERE childid='$childid'");  
+		$result = mysqli_query($db->myconn, "SELECT * FROM changing WHERE childid='$childid'");  
 		
 		$num_rows = mysqli_num_rows($result);
 		if ($num_rows > 0) {
 			while ($row = $result->fetch_assoc()) {
 				$row_array['ref'] = $row['ref'];
+				$row_array['type'] = $row['type'];
 				$row_array['minderid'] = $row['minderid'];
 				$row_array['childid'] = $row['childid'];
-				$row_array['amount'] = $row['amount'];
 				$row_array['date'] = $row['date'];
 				$row_array['time'] = $row['time'];
 
