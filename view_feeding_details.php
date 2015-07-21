@@ -1,7 +1,7 @@
 <?php  
 
 	$response = array(); 
-
+		
 	
 	if (isset($_POST['childid'])) {  
 
@@ -17,6 +17,9 @@
 		
 		$num_rows = mysqli_num_rows($result);
 		if ($num_rows > 0) {
+			$row_array["success_msg"] = 0;  
+			$row_array["message "] = "Records Found";  
+
 			while ($row = $result->fetch_assoc()) {
 				$row_array['ref'] = $row['ref'];
 				$row_array['minderid'] = $row['minderid'];
@@ -28,12 +31,14 @@
 				array_push($response, $row_array);
 
 			}
+
 			echo json_encode($response);  
 
 		} else {  
 
-			$response["success_msg "] = 0;  
-			$response["message"] = "ERROR: Record not found";  
+			$row_array["success_msg"] = 1;  
+			$row_array["message"] = "ERROR: Record not found";  
+			array_push($response, $row_array);
 			// echoing JSON response  
 			echo json_encode($response);  
 		}  

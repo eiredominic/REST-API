@@ -13,7 +13,7 @@
 		$db = new db_connection();
 		$db->connect();
 		
-		$result = mysqli_query($db->myconn, "SELECT * FROM medication WHERE childid='$childid'");  
+		$result = mysqli_query($db->myconn, "SELECT * FROM comments WHERE childid='$childid'");  
 		
 		$num_rows = mysqli_num_rows($result);
 		if ($num_rows > 0) {

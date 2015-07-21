@@ -8,6 +8,7 @@ if (isset($_POST['unique_id']) && isset ($_POST['type']) && isset ($_POST['name'
 	$name = $_POST['name'];  
 	$email = $_POST['email'];  
 	$password = $_POST['password'];  
+	$dob = $_POST['dob'];
 	
 	// hash password 
 	$cryptpw= generateHash($password);
@@ -18,7 +19,7 @@ if (isset($_POST['unique_id']) && isset ($_POST['type']) && isset ($_POST['name'
 	$db = new db_connection();
 	$db->connect();
 
-	$result = mysqli_query($db->myconn, "INSERT INTO users(unique_id, type, name, email, encrypted_password, created_at) VALUES('$unique_id', '$type', '$name', '$email', '$cryptpw', NOW())");  
+	$result = mysqli_query($db->myconn, "INSERT INTO users(unique_id, type, name, email, encrypted_password, created_at, dob) VALUES('$unique_id', '$type', '$name', '$email', '$cryptpw', NOW(), '$dob')");  
 
 	// check if row inserted or not  
 	if ($result) {  

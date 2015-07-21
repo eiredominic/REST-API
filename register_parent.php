@@ -9,6 +9,8 @@ if (isset($_POST['unique_id']) && isset ($_POST['type']) && isset ($_POST['name'
 	$name = $_POST['name'];  
 	$email = $_POST['email'];  
 	$password = $_POST['password']; 
+	$dob = $_POST['dob']; 
+	$address = $_POST['address']; 
 
 	// hash password 
 	$cryptpw= generateHash($password);
@@ -20,21 +22,17 @@ if (isset($_POST['unique_id']) && isset ($_POST['type']) && isset ($_POST['name'
 	$db = new db_connection();
 	$db->connect();
    
-	if (isset($_POST['child_id'])) {
-		$child_id = $_POST['child_id']; 
-		$result = mysqli_query($db->myconn, "INSERT INTO users (unique_id, type, name, email, encrypted_password,created_at, linked_id) VALUES ('$unique_id', '$type', '$name', '$email', '$cryptpw', NOW(), '$child_id'));  
-	} else{	
-		$result = mysqli_query($db->myconn, "INSERT INTO users(unique_id, type, name, email, encrypted_password, created_at) VALUES('$unique_id', '$type', '$name', '$email', '$cryptpw', NOW())");  
-	}
+	$result = mysqli_query($db->myconn, "INSERT INTO users(unique_id, type, name, email, encrypted_password, created_at, dob, address) VALUES('$unique_id', '$type', '$name', '$email', '$cryptpw', NOW(), '$dob', '$address')");  
+	
 
 	// check if row inserted or not  
 	if ($result) {  
-		$response["success_msg"] = 777;  
+		$response["success_msg"] = 0;  
 		$response["message"] = "Registration Successful";  
 		echo json_encode($response);  
 	} else {  
 		// failed to insert row  
-		$response["success_msg "] = 999;  
+		$response["success_msg "] = 1;  
 		$response["message"] = "Registration not successful. An error occurred.";  
 
 	// echoing JSON response  

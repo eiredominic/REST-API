@@ -2,9 +2,9 @@
 
 	$response = array(); 
 
-	if (isset($_POST['unique_id'])) {  
+	if (isset($_POST['parent_id'])) {  
 
-		$unique_id = $_POST['unique_id'];  
+		$parent_id = $_POST['parent_id'];  
 
 		// include db connect class  
 		include 'database_connect.php';  
@@ -14,25 +14,22 @@
 
 
 
-		$result = mysqli_query($db->myconn, "SELECT * FROM users WHERE unique_id='$unique_id'");  
+		$result = mysqli_query($db->myconn, "SELECT * FROM users WHERE parent_id='$parent_id'");  
 		$num_rows = mysqli_num_rows($result);
-		
+	if ($num_rows > 0) {
 		while ($row = $result->fetch_assoc()) {
-			$dbpassword = $row['encrypted_password'];
-			$response["name"] = $row['name'];
-			$response["type"] = $row['type'];
-		}
+				
+			$row_array['child_id'] = $row['unique_id'];
+			$row_array['success_msg'] = 0;
+			array_push($response, $row_array);
+	
 
-		
-		// check if row inserted or not  
-		if ($num_rows > 0) {
-			$response["success_msg"] = 1;  
-			$response["message"] = "Found Child";
+		}
 			echo json_encode($response);  
 
 		} else {  
 			// failed to insert row  
-			$response["success_msg "] = 0;  
+			$response["success_msg"] = 1;  
 			$response["message"] = "Could not find child. Check unique ID.";  
 			// echoing JSON response  
 			echo json_encode($response);  
